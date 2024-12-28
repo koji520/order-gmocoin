@@ -29,17 +29,17 @@ function main() {
   if (myBalance > AMOUNT) {
     order();
   } else {
-    var strBody = "\n残高不足です\n残高" + Number(myBalance).toFixed(0) + "円";
+    const strBody = "\n残高不足です\n残高" + Number(myBalance).toFixed(0) + "円";
     lineNotify(strBody);
   }
 }
 
 //価格取得
 function getbuyPrice() {
-  var path = "/v1/ticker?symbol="
-  var url = PUBLIC + path + COIN
-  var method = "GET"
-  var nowPrice = fetchJSON(url, method, true).data;
+  const path = "/v1/ticker?symbol="
+  const url = PUBLIC + path + COIN
+  const method = "GET"
+  const nowPrice = fetchJSON(url, method, true).data;
   Logger.log(COIN + "現在価格: " + nowPrice[0].last);
   return nowPrice[0].last;
 }
@@ -52,7 +52,7 @@ function order() {
     if (COIN === "ETH") return 2
     return 4
   }
-  var path = "/v1/order",
+  const path = "/v1/order",
     endpoint = PRIVATE,
     url = endpoint + path,
     method = "POST",
@@ -77,24 +77,24 @@ function order() {
 
 //残高取得
 function getBalance() {
-  var path = "/v1/account/assets";
-  var url = PRIVATE + path;
-  var nowBalance = fetchJSON(url, "GET", false, path).data;
+  const path = "/v1/account/assets";
+  const url = PRIVATE + path;
+  const nowBalance = fetchJSON(url, "GET", false, path).data;
   Logger.log("日本円残高: " + nowBalance[0].amount);
   return nowBalance[0].amount;
 }
 
 //取引所のWebAPIへアクセス
 function fetchJSON(url, method, isPublic, path, _body) {
-  var nonce = Date.now().toString(),
+  const nonce = Date.now().toString(),
     body = JSON.stringify(_body);
   if (isPublic == true) {
-    var options = {
+    const options = {
       method: method,
     }
   } else {
     if (method == "POST") {
-      var options = {
+      const options = {
         method: method,
         payload: body,
         headers: {
@@ -105,7 +105,7 @@ function fetchJSON(url, method, isPublic, path, _body) {
         }
       }
     } else {
-      var options = {
+      const options = {
         method: method,
         headers: {
           "API-KEY": GMO_APIKEY,
@@ -127,9 +127,9 @@ function createSignature(nonce, method, path, body) {
       return str + (chr.length === 1 ? "0" : "") + chr;
     }, "");
   }
-  var text = (typeof body === "undefined") ?
+  const text = (typeof body === "undefined") ?
     nonce + method + path : nonce + method + path + body; //★pathの結合できないため直書き
-  var signature = Utilities.computeHmacSha256Signature(text, GMO_SECRET);
+    const signature = Utilities.computeHmacSha256Signature(text, GMO_SECRET);
   return tohex(signature);
 }
 
