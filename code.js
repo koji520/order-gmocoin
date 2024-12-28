@@ -6,7 +6,7 @@ const GMO_SECRET = props.GMO_SECRET;
 
 //積立設定==================================================
 const COIN = props.COIN;    // 通貨 BTC/ETH
-const AMOUNT = props.AMOUNT;  // 注文額(円)
+const AMOUNT = parseInt(props.AMOUNT);  // 注文額(円)
 const DISCOUNT = 0.999; // 指値注文時の価格からの値下げ率
 
 
