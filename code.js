@@ -88,12 +88,12 @@ function fetchJSON(url, method, isPublic, path, _body) {
   const nonce = Date.now().toString(),
     body = JSON.stringify(_body);
   if (isPublic == true) {
-    const options = {
+    var options = {
       method: method,
     }
   } else {
     if (method == "POST") {
-      const options = {
+      var options = {
         method: method,
         payload: body,
         headers: {
@@ -104,7 +104,7 @@ function fetchJSON(url, method, isPublic, path, _body) {
         }
       }
     } else {
-      const options = {
+      var options = {
         method: method,
         headers: {
           "API-KEY": GMO_APIKEY,
