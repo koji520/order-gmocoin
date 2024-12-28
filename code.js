@@ -45,8 +45,8 @@ function getbuyPrice() {
 
 // 注文
 function order() {
-  // 小数点何桁までの数量を注文するか。最小取引数量によって変わる。
-  const decimalPrices = ()=> {
+  // 小数何桁までの数量を注文するか。最小取引数量によって変わる。
+  const decimalPlaces = () => {
     if (COIN === "BTC") return 4
     if (COIN === "ETH") return 2
     return 4
@@ -61,7 +61,7 @@ function order() {
       side: "BUY",
       executionType: "LIMIT",
       price: (buyPrice * DISCOUNT).toFixed(0), //小数点なし
-      size: (AMOUNT / buyPrice).toFixed(decimalPrices)
+      size: (AMOUNT / buyPrice).toFixed(decimalPlaces())
     },
     result = fetchJSON(url, method, false, path, body);
 
