@@ -5,23 +5,22 @@ const GMO_APIKEY = props.GMO_APIKEY;
 const GMO_SECRET = props.GMO_SECRET;
 
 //積立設定==================================================
-//対応ペア///BTC///ETH/
-const COIN = props.COIN;    // 積立対象通貨を入力
-const AMOUNT = props.AMOUNT;  // 積立額(円)を設定する
+const COIN = props.COIN;    // 通貨 BTC/ETH
+const AMOUNT = props.AMOUNT;  // 注文額(円)
 const DISCOUNT = 0.999; // 指値注文時の価格からの値下げ率
 
 
-//LINE通知=====================================
+// LINE通知=====================================
 const LINE_CHANNEL_ACCESS_TOKEN = props.LINE_CHANNEL_ACCESS_TOKEN;
 const LINE_USER_ID = props.LINE_USER_ID;
 const URL_LINE = "https://api.line.me/v2/bot/message/push";
 
-//GMOコイン設定
+// GMOコイン設定
 const PUBLIC = "https://api.coin.z.com/public";
 const PRIVATE = "https://api.coin.z.com/private";
 const PAIR = COIN + "_JPY";  // レバレッジ取引用
 
-//メイン処理================================================
+// メイン処理================================================
 
 function main() {
   myBalance = getBalance();
@@ -34,7 +33,7 @@ function main() {
   }
 }
 
-//価格取得
+// 価格取得
 function getbuyPrice() {
   const path = "/v1/ticker?symbol="
   const url = PUBLIC + path + COIN
@@ -44,7 +43,7 @@ function getbuyPrice() {
   return nowPrice[0].last;
 }
 
-//注文
+// 注文
 function order() {
   // 小数点何桁までの数量を注文するか。最小取引数量によって変わる。
   const decimalPrices = ()=> {
@@ -75,7 +74,7 @@ function order() {
   Logger.log(result);
 }
 
-//残高取得
+// 残高取得
 function getBalance() {
   const path = "/v1/account/assets";
   const url = PRIVATE + path;
@@ -84,7 +83,7 @@ function getBalance() {
   return nowBalance[0].amount;
 }
 
-//取引所のWebAPIへアクセス
+// 取引所のWebAPIへアクセス
 function fetchJSON(url, method, isPublic, path, _body) {
   const nonce = Date.now().toString(),
     body = JSON.stringify(_body);
@@ -119,7 +118,7 @@ function fetchJSON(url, method, isPublic, path, _body) {
   return JSON.parse(UrlFetchApp.fetch(url, options));
 }
 
-//取引所のログイン認証用の署名作成
+// 取引所のログイン認証用の署名作成
 function createSignature(nonce, method, path, body) {
   function tohex(signature) {
     return signature.reduce(function (str, chr) {
@@ -133,7 +132,7 @@ function createSignature(nonce, method, path, body) {
   return tohex(signature);
 }
 
-//LINE Messaging APIにPOST
+// LINE Messaging APIにPOST
 function lineNotify(postText) {
   const postData = {
     "to": LINE_USER_ID,
