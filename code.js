@@ -79,12 +79,12 @@ function getBalance() {
 function fetchJSON(url, method, isPublic, path, _body) {
   const nonce = Date.now().toString(),
     body = JSON.stringify(_body);
-  if (isPublic == true) {
+  if (isPublic) {
     var options = {
       method: method,
     }
   } else {
-    if (method == "POST") {
+    if (method === "POST") {
       var options = {
         method: method,
         payload: body,
