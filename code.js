@@ -24,7 +24,7 @@ function main() {
   if (myBalance > AMOUNT) {
     order();
   } else {
-    const strBody = "\n残高不足です\n残高" + Number(myBalance).toFixed(0) + "円";
+    const strBody = `残高不足です\n残高${Number(myBalance).toFixed(0)}円`;
     lineNotify(strBody);
   }
 }
@@ -35,7 +35,7 @@ function getbuyPrice() {
   const url = PUBLIC + path + COIN
   const method = "GET"
   const nowPrice = fetchJSON(url, method, true).data;
-  Logger.log(COIN + "現在価格: " + nowPrice[0].last);
+  Logger.log(`${COIN}現在価格: ${nowPrice[0].last}`);
   return nowPrice[0].last;
 }
 
@@ -61,12 +61,9 @@ function order() {
     },
     result = fetchJSON(url, method, false, path, body);
 
-  var strBody = "\n" + COIN + "を" + AMOUNT + "円分積立注文しました"
-  strBody = strBody + "\n価格: " + body.price
-  strBody = strBody + "\n数量: " + body.size
-  strBody = strBody + "\n結果: " + JSON.stringify(result)
-  lineNotify(strBody);
-  Logger.log(strBody);
+  const message = `${COIN}を${AMOUNT}円分注文しました\n価格: ${body.price}\n数量: ${body.size}\n結果: ${JSON.stringify(result)}`
+  lineNotify(message);
+  Logger.log(message);
   Logger.log(result);
 }
 
@@ -75,7 +72,7 @@ function getBalance() {
   const path = "/v1/account/assets";
   const url = PRIVATE + path;
   const nowBalance = fetchJSON(url, "GET", false, path).data;
-  Logger.log("日本円残高: " + nowBalance[0].amount);
+  Logger.log("日本円残高: ", nowBalance[0].amount);
   return nowBalance[0].amount;
 }
 
@@ -123,7 +120,7 @@ function createSignature(nonce, method, path, body) {
     }, "");
   }
   const text = (typeof body === "undefined") ?
-    nonce + method + path : nonce + method + path + body; //★pathの結合できないため直書き
+    nonce + method + path : nonce + method + path + body; //pathの結合できないため直書き
     const signature = Utilities.computeHmacSha256Signature(text, GMO_SECRET);
   return tohex(signature);
 }
