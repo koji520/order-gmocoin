@@ -29,14 +29,14 @@ function main() {
   }
 }
 
-// 価格取得
-function getbuyPrice() {
+// 現在価格取得
+function getCurrentPrice() {
   const path = "/v1/ticker?symbol="
   const url = PUBLIC + path + COIN
   const method = "GET"
-  const nowPrice = fetchJSON(url, method, true).data;
-  Logger.log(`${COIN}現在価格: ${nowPrice[0].last}`);
-  return nowPrice[0].last;
+  const data = fetchJSON(url, method, true).data;
+  Logger.log(`${COIN}現在価格: ${data[0].last}`);
+  return data[0].last;
 }
 
 // 注文
@@ -50,13 +50,13 @@ function order() {
   const path = "/v1/order"
   const url = PRIVATE + path
   const method = "POST"
-  const buyPrice = parseFloat(getbuyPrice())
+  const currentPrice = parseFloat(getCurrentPrice())
   const body = {
       symbol: COIN,
       side: "BUY",
       executionType: "LIMIT",
-      price: (buyPrice * DISCOUNT).toFixed(0),
-      size: (AMOUNT / buyPrice).toFixed(decimalPlaces())
+      price: (currentPrice * DISCOUNT).toFixed(0),
+      size: (AMOUNT / currentPrice).toFixed(decimalPlaces())
     }
   const result = fetchJSON(url, method, false, path, body);
 
