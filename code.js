@@ -47,19 +47,18 @@ function order() {
     if (COIN === "ETH") return 2
     return 4
   }
-  const path = "/v1/order",
-    endpoint = PRIVATE,
-    url = endpoint + path,
-    method = "POST",
-    buyPrice = parseFloat(getbuyPrice()),
-    body = {
+  const path = "/v1/order"
+  const url = PRIVATE + path
+  const method = "POST"
+  const buyPrice = parseFloat(getbuyPrice())
+  const body = {
       symbol: COIN,
       side: "BUY",
       executionType: "LIMIT",
-      price: (buyPrice * DISCOUNT).toFixed(0), //小数点なし
+      price: (buyPrice * DISCOUNT).toFixed(0),
       size: (AMOUNT / buyPrice).toFixed(decimalPlaces())
-    },
-    result = fetchJSON(url, method, false, path, body);
+    }
+  const result = fetchJSON(url, method, false, path, body);
 
   const message = `${COIN}を${AMOUNT}円分注文しました\n価格: ${body.price}\n数量: ${body.size}\n結果: ${JSON.stringify(result)}`
   notifyLine(message);
