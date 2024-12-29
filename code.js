@@ -25,7 +25,7 @@ function main() {
     order();
   } else {
     const strBody = `残高不足です\n残高${Number(myBalance).toFixed(0)}円`;
-    lineNotify(strBody);
+    notifyLine(strBody);
   }
 }
 
@@ -62,7 +62,7 @@ function order() {
     result = fetchJSON(url, method, false, path, body);
 
   const message = `${COIN}を${AMOUNT}円分注文しました\n価格: ${body.price}\n数量: ${body.size}\n結果: ${JSON.stringify(result)}`
-  lineNotify(message);
+  notifyLine(message);
   Logger.log(message);
   Logger.log(result);
 }
@@ -126,7 +126,7 @@ function createSignature(nonce, method, path, body) {
 }
 
 // LINE Messaging APIにPOST
-function lineNotify(postText) {
+function notifyLine(postText) {
   const postData = {
     "to": LINE_USER_ID,
     "messages": [{
