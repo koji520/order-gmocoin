@@ -11,11 +11,6 @@ const DISCOUNT = 0.999; // 指値注文時の価格からの値下げ率
 const PUBLIC = "https://api.coin.z.com/public";
 const PRIVATE = "https://api.coin.z.com/private";
 
-// LINE通知設定
-const LINE_CHANNEL_ACCESS_TOKEN = props.LINE_CHANNEL_ACCESS_TOKEN;
-const LINE_USER_ID = props.LINE_USER_ID;
-const URL_LINE = "https://api.line.me/v2/bot/message/push";
-
 // メイン処理================================================
 
 function main() {
@@ -126,31 +121,4 @@ function createSignature(nonce, method, path, body) {
       : nonce + method + path + body; //pathの結合できないため直書き
   const signature = Utilities.computeHmacSha256Signature(text, GMO_SECRET);
   return tohex(signature);
-}
-
-// LINE Messaging APIにPOST
-function notifyLine(postText) {
-  const postData = {
-    to: LINE_USER_ID,
-    messages: [
-      {
-        type: "text",
-        text: postText,
-      },
-    ],
-  };
-  try {
-    const params = {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + LINE_CHANNEL_ACCESS_TOKEN,
-      },
-      payload: JSON.stringify(postData),
-    };
-    const res = UrlFetchApp.fetch(URL_LINE, params);
-    //  console.log(res);
-  } catch (error) {
-    console.log(error);
-  }
 }
