@@ -25,7 +25,7 @@ function notifyLine(postText) {
       },
       payload: JSON.stringify(postData),
     };
-    const res = UrlFetchApp.fetch(URL_LINE, params);
+    UrlFetchApp.fetch(URL_LINE, params);
     //  console.log(res);
   } catch (error) {
     console.log(error);
