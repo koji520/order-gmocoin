@@ -60,7 +60,7 @@ function order() {
 // 小数何桁までの数量を注文するか。最小取引数量によって変わる。
 function getDecimalPlaces() {
   if (COIN === "BTC") return 4;
-  if (COIN === "ETH") return 2;
+  if (COIN === "ETH") return 3;
   return 4;
 };
 
